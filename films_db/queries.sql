@@ -110,11 +110,19 @@ FROM reviews;
 SELECT ROUND(AVG(budget), -3) as avg_budget_thousands
 FROM films;
 
--- the country with the highest budget in each release_year
+-- country with the highest budget in each release_year
 SELECT release_year, country, max(budget) as max_budget
 FROM films
 GROUP BY release_year, country
 ORDER BY release_year, country;
+
+-- countries with highest average film_budget
+SELECT country, ROUND(AVG(budget), 2) as average_budget
+FROM films
+GROUP BY country
+-- Filter to countries with an average_budget of more than one billion
+HAVING ROUND(AVG(budget), 2) > 1000000000
+ORDER BY average_budget DESC
 
 --percentage of people who are no longer alive
 SELECT count(deathdate) * 100.0 / 8397.0 AS percentage_dead
@@ -131,6 +139,15 @@ WHERE duration IS NOT NULL
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 1;  --ANS:334mins
+
+-- release_year of films with highest average budget and gross earnings each year after 1990 if the average budget is greater than 60 million.
+SELECT release_year, AVG(budget) AS avg_budget, AVG(gross) AS avg_gross
+FROM films
+WHERE release_year > 1990
+GROUP BY release_year
+HAVING AVG(budget) > 60000000
+ORDER BY avg_gross DESC
+LIMIT 1;
 
 										--JOINS
 
