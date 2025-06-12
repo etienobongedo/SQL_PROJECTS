@@ -6,8 +6,8 @@ Welcome! This repository showcases my skills in SQL and database design using Po
 
 - `schema.sql`: SQL script to create the database schema (tables, constraints, etc.)
 - `data.sql`: Sample data to populate the database
-- `queries/`: Example SQL queries for data manipulation and retrieval
-- `diagrams/`: Entity-Relationship (ER) diagrams and other visual aids
+- `queries.sql`: Example SQL queries for data manipulation and retrieval
+- `diagrams.md`: Entity-Relationship (ER) diagrams and other visual aids
 
 ## 🚀 Getting Started
 
