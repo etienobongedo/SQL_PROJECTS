@@ -1,6 +1,6 @@
 # 🎬 Films Database Project
 
-Welcome to the **Films Database** project!  
+Welcome to my first project with PostgreSQL, the **Films Database** project!  
 This repository showcases my hands-on journey with SQL—demonstrating how to filter, compare, summarize, and analyze data using a sample films database.
 
 ---
