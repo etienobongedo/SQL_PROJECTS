@@ -34,7 +34,7 @@ To try out the scripts:
 
 ## 📝 Contact
 
-Feel free to explore the code! If you have questions, open an issue or connect with me on [LinkedIn](https://www.linkedin.com/).
+Feel free to explore the code! If you have questions, open an issue or connect with me on [LinkedIn](https://www.linkedin.com/in/etienobong-edo).
 
 ---
 
