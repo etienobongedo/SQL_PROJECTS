@@ -1,7 +1,7 @@
 ```mermaid
 erDiagram
     roles ||--o{ films : featured
-    people ||--o{ roles : plays
+    people ||--o{ roles : is
     reviews ||--o{ films : written
     films {
         int4 id PK
