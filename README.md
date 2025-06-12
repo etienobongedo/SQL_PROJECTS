@@ -23,7 +23,7 @@ To try out the scripts:
    psql -d portfolio_db -f schema.sql
    psql -d portfolio_db -f data.sql
    ```
-4. Try the example queries in the `queries/` folder.
+4. Try the example queries in the `queries.sql` folder.
 
 ## 📊 Example Features
 
