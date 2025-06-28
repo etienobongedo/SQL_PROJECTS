@@ -7,7 +7,7 @@ FROM cities
 INNER JOIN countries
 ON cities.country_code = countries.code;
 
--- fetching the inflation rate of countries and the years of occurrence using country codes and names
+-- fetching the inflation rate of countries and the years of occurrence identified by country codes and names
 SELECT 
   c.code country_code, 
   name, 
@@ -17,16 +17,17 @@ FROM countries AS c
 INNER JOIN economies AS e
 ON c.code = e.code
 
-  -- countries and the languages they speak - both official (binary) and unofficial ones
+  -- identifying languages spoken in each country and it's percentage in the population. 'official' column is a boolean
 SELECT 
   c.name AS country, 
   l.name AS language, 
+  percent,
   official
 FROM countries AS c
 INNER JOIN languages AS l
 USING (code);
 
---countries where Bhojpuri language is spoken
+--identifying countries where Bhojpuri language is spoken
 SELECT 
   c.name AS country, 
   l.name AS language
@@ -73,7 +74,7 @@ ORDER BY code DESC;
                                   ON c1.country_code = c2.code
                                   ORDER BY code DESC;
 
--- gaining insights into the standard of living of each country (gdp_percapita) in the year 2010
+-- gaining insights into the standard of living (gdp_percapita) of each country in the year 2010
 SELECT 
   name, 
   region, 
@@ -85,7 +86,7 @@ USING(code)
 -- Filter for the year 2010
 WHERE year = 2010;
 
--- calculating the average standard of living of each region in year 2010
+-- calculating the average standard of living (gdp_percapita) in each region in year 2010
 SELECT 
   region, 
   AVG(gdp_percapita) AS avg_gdp
@@ -93,5 +94,33 @@ FROM countries AS c
 LEFT JOIN economies AS e
 USING(code)
 WHERE year = 2010
--- Group by non-aggregate column (region)
+-- Group by the non-aggregated column (region)
 GROUP BY region;
+
+-- identifying all currencies (basic_unit) for each country in the North American region 
+SELECT 
+  name AS country, 
+  code, 
+  region, 
+  basic_unit
+FROM countries
+FULL JOIN currencies
+USING (code)
+-- filter region for North America
+WHERE region = 'North America'
+ORDER BY country;
+
+-- getting information for the regions Melanesia & Micronesia - the countries there, their languages and currency
+SELECT 
+	c1.name AS country, 
+  region, 
+  l.name AS language,
+	basic_unit, 
+  frac_unit
+FROM countries as c1 
+FULL JOIN languages AS l
+USING (code)
+FULL JOIN currencies AS c2
+USING (code)
+WHERE region LIKE 'M%esia';
+
