@@ -112,10 +112,10 @@ ORDER BY country;
 
 -- getting information for the regions Melanesia & Micronesia - the countries there, their languages and currency
 SELECT 
-	c1.name AS country, 
+  c1.name AS country, 
   region, 
   l.name AS language,
-	basic_unit, 
+  basic_unit, 
   frac_unit
 FROM countries as c1 
 FULL JOIN languages AS l
@@ -124,3 +124,126 @@ FULL JOIN currencies AS c2
 USING (code)
 WHERE region LIKE 'M%esia';
 
+-- countries with the lowest life expectancy for the year 2010
+SELECT 
+    c.name AS country,
+    region,
+    life_expectancy AS life_exp
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+-- Filter for only results in the year 2010
+WHERE year = 2010
+-- Sort by life_exp
+ORDER BY life_exp
+-- Limit to five records
+LIMIT 5;
+
+-- A SELF JOIN on populations, comparing the change in the population size bw 2010 & 2015 census info given.
+SELECT 
+	p1.country_code, 
+	p1.size AS size2010, 
+	p2.size AS size2015
+-- Join populations as p1 to itself, alias as p2, on country code
+FROM populations AS p1
+INNER JOIN populations AS p2
+ON p1.country_code = p2.country_code
+
+	-- SET OPERATORS
+
+-- joining the economies table and the populations table with duplicates
+SELECT code, year
+FROM economies
+-- Set theory clause
+UNION ALL
+SELECT country_code, year
+FROM populations
+ORDER BY code, year;
+
+-- returning all cities that have the same name as a country
+SELECT name
+FROM cities
+INTERSECT
+SELECT name
+FROM countries
+ORDER BY name;			ANS: Singapore
+
+-- returning all cities that do not have the same name as a country
+SELECT name
+FROM cities
+EXCEPT
+SELECT name
+FROM countries
+ORDER BY name;
+
+-- A SEMI JOIN/ SUBQUERY tp get the distinct languages in the Middle East
+SELECT DISTINCT name
+FROM languages
+-- using bracketed subquery as a filter
+WHERE code IN
+    (SELECT code
+    FROM countries
+    WHERE region = 'Middle East')
+ORDER BY name;
+
+-- An ANTI JOIN to get names & codes of Oceanian countries not in the currencies table
+SELECT code, name
+FROM countries
+WHERE continent = 'Oceania'
+-- Filter for countries not included in the bracketed subquery
+  AND code NOT IN
+    (SELECT code
+    FROM currencies);
+
+-- fetching population of countries with life_expectancy 1.15 times higher than the average for the year 2015
+SELECT *
+FROM populations
+WHERE year = 2015
+-- Filter for only those populations where life expectancy is 1.15 times higher than average
+  AND life_expectancy > 1.15 *
+  (SELECT AVG(life_expectancy)
+   FROM populations
+   WHERE year = 2015);
+
+-- identifying capital cities
+SELECT name, country_code, urbanarea_pop
+FROM cities
+-- Filter for 'capital' on the countries table using a subquery 
+WHERE name IN
+    (SELECT capital
+    FROM countries
+    WHERE capital IS NOT NULL)
+-- ordered by the highest populated capital city
+ORDER BY urbanarea_pop DESC;
+
+-- TOP nine countries with the most number of cities
+SELECT 
+	countries.name AS Country, 
+	count(cities.name) AS cities_num
+FROM countries
+LEFT JOIN cities
+ON countries.code = cities.country_code
+GROUP BY countries.name
+-- Order by count of cities as cities_num
+ORDER BY cities_num DESC, Country
+-- Limit the results
+LIMIT 9;
+
+-- TOP 10 capital cities in Europe and the Americas by city_perc
+SELECT 
+	name, 
+	country_code, 
+	city_proper_pop, 
+	metroarea_pop,
+ 	(city_proper_pop/metroarea_pop * 100) AS city_perc
+FROM cities
+-- Use subquery to filter for capital city
+WHERE name IN 
+    (SELECT capital
+    FROM countries
+    WHERE continent = 'Europe' OR continent LIKE '%America')
+-- Add filter condition such that metroarea_pop does not have null values to avoid div0 error
+    AND metroarea_pop IS NOT NULL
+-- Sort and limit the result
+ORDER BY city_perc DESC
+LIMIT 10;
