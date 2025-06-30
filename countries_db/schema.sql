@@ -1,4 +1,17 @@
--- Schema for Countries Database Project
+-- Table: countries
+CREATE TABLE countries (
+    code VARCHAR PRIMARY KEY,
+    name VARCHAR,
+    continent VARCHAR,
+    region VARCHAR,
+    surface_area REAL,
+    indep_year INT,
+    local_name VARCHAR,
+    gov_form VARCHAR,
+    capital VARCHAR,
+    cap_long REAL,
+    cap_lat REAL
+);
 
 -- Table: languages
 CREATE TABLE languages (
@@ -9,42 +22,46 @@ CREATE TABLE languages (
     official BOOLEAN
 );
 
--- Table: populations
-CREATE TABLE populations (
-    pop_id SERIAL PRIMARY KEY,
-    year INT,
-    fertility_rate REAL,
-    life_expentancy REAL,
-    size REAL,
-    country_code VARCHAR
-);
-
 -- Table: economies
 CREATE TABLE economies (
     econ_id SERIAL PRIMARY KEY,
-    imports REAL,
-    exports REAL,
+    code VARCHAR,
     year INT,
+    income_group VARCHAR,
     gdp_percapita REAL,
     gross_savings REAL,
     inflation_rate REAL,
     total_investment REAL,
     unemployment_rate REAL,
-    code VARCHAR,
-    income_group VARCHAR
+    exports REAL,
+    imports REAL
 );
 
--- Table: countries
-CREATE TABLE countries (
-    code VARCHAR PRIMARY KEY,
-    cap_lat REAL,
-    surface_area REAL,
-    indep_year INT,
-    cap_long REAL,
-    capital VARCHAR,
-    local_name VARCHAR,
-    gov_form VARCHAR,
-    name VARCHAR,
-    continent VARCHAR,
-    region VARCHAR
+-- Table: populations
+CREATE TABLE populations (
+    pop_id SERIAL PRIMARY KEY,
+    country_code VARCHAR,
+    year INT,
+    fertility_rate REAL,
+    life_expentancy REAL,
+    size REAL
+);
+
+-- Table: cities
+CREATE TABLE cities (
+    name VARCHAR PRIMARY KEY,
+    country_code VARCHAR,
+    city_proper_pop REAL,
+    metroarea_pop REAL,
+    urbanarea_pop REAL
+);
+
+-- Table: currencies
+CREATE TABLE currencies (
+    curr_id INT PRIMARY KEY,
+    code VARCHAR,
+    basic_unit VARCHAR,
+    curr_code VARCHAR,
+    frac_unit VARCHAR,
+    frac_perbasic REAL
 );
