@@ -38,3 +38,18 @@ INSERT INTO populations (
     (4, 'NGA', 2010, 5.6, 48.5, 158503197),
     (5, 'USA', 2010, 2.0, 76.3, 309349689),
     (6, 'BRA', 2010, 1.9, 73.8, 195713635);
+
+-- Sample data for cities table
+INSERT INTO cities (name, country_code, city_proper_pop, metroarea_pop, urbanarea_pop) VALUES
+  ('Lagos', 'NGA', 15000000, 23000000, 17000000),
+  ('Abuja', 'NGA', 3000000, 4000000, 3500000),
+  ('New York', 'USA', 8500000, 20000000, 18000000),
+  ('Washington D.C.', 'USA', 700000, 6100000, 760000),
+  ('São Paulo', 'BRA', 12300000, 22000000, 21000000),
+  ('Brasília', 'BRA', 3100000, 4300000, 4100000);
+
+-- Sample data for currencies table
+INSERT INTO currencies (curr_id, code, basic_unit, curr_code, frac_unit, frac_perbasic) VALUES
+  (1, 'NGA', 'Naira', 'NGN', 'Kobo', 100),
+  (2, 'USA', 'Dollar', 'USD', 'Cent', 100),
+  (3, 'BRA', 'Real', 'BRL', 'Centavo', 100);
