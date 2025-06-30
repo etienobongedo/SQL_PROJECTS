@@ -70,18 +70,23 @@ The database features the following tables:
 ## 🗃️ Example Query
 
 ```sql
--- List the top 10 most populous cities with their country, region, and GDP per capita
-SELECT
-  cities.name AS city,
-  countries.name AS country,
-  countries.region,
-  economies.gdp_per_capita
-FROM
-  cities
-JOIN countries ON cities.country_code = countries.code
-JOIN economies ON countries.code = economies.country_code
-ORDER BY
-  cities.population DESC
+-- TOP 10 most populous capital cities in Europe and the Americas by city_perc
+SELECT 
+	name, 
+	country_code, 
+	city_proper_pop, 
+	metroarea_pop,
+ 	(city_proper_pop/metroarea_pop * 100) AS city_perc
+FROM cities
+-- Use subquery to filter for capital city
+WHERE name IN 
+    (SELECT capital
+    FROM countries
+    WHERE continent = 'Europe' OR continent LIKE '%America')
+-- Add filter condition such that metroarea_pop does not have null values to avoid div0 error
+    AND metroarea_pop IS NOT NULL
+-- Sort and limit the result
+ORDER BY city_perc DESC
 LIMIT 10;
 ```
 
