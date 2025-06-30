@@ -23,6 +23,7 @@ The database features the following tables:
 - **languages**: Information on languages spoken in each country, including official and minority languages and the percentage of usage.
 - **countries**: Core country data, including name, continent, region, form of government, etc.
 - **economies**: Economic indicators for each country, such as GDP, income classification, unemployment rate, EXIM (Export-Import), etc.
+- **populations**: Stores demographic data for each country, including year, fertility rate, life expectancy, and total population size.
 
 ---
 
